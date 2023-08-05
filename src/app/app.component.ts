@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { todos } from './mock-data';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Todo } from './types/todo';
@@ -8,7 +8,7 @@ import { Todo } from './types/todo';
   templateUrl: './app.component.html',
   styleUrls: ['./../styles/index.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public todos: Todo[] = todos;
   public todoForm = new FormGroup({
     title: new FormControl('', {
@@ -25,6 +25,18 @@ export class AppComponent {
   }
   get activeTodos(): Todo[] {
     return this.todos.filter((todo) => !todo.completed);
+  }
+
+  constructor() {}
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.todos[1] = {...this.todos[1], title: 'qwerty'};
+    }, 3000);
+  }
+
+  trackById(i: number, todo: Todo): number {
+    return todo.id;
   }
 
   // handleTodoToggle(event: Event, todo: Todo): void {

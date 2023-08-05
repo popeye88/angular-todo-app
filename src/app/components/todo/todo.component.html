@@ -12,19 +12,28 @@
 
   <form
     *ngIf="editing"
+    (ngSubmit)="save()"
   >
     <input
+      #titleFocus
       type="text"
       class="todo__title-field"
       placeholder="Empty todo will be deleted"
-      value="Todo is being edited now"
+      name="title"
+      [(ngModel)]="title"
+      (keyup.escape)="editing = false"
+      (blur)="save()"
     />
   </form>
 
   <ng-container
     *ngIf="!editing"
   >
-    <span class="todo__title">{{ todo.title }}</span>
+    <span class="todo__title"
+      (dblclick)="edit()"
+    >
+      {{ todo.title }}
+    </span>
 
     <button type="button" class="todo__remove"
       (click)="delete.emit()"
